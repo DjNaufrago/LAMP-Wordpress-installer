@@ -147,6 +147,18 @@ configfirewall() {
   echo y | ufw enable
 }
 
+executefunctions() {
+	updaterepo
+        updatepack
+        installapache
+        installmariadb
+        configmariadbwp
+        downloadwordpress
+        decompresswp
+        configfirewall
+        systemctl reload apache2
+}
+
 dialog \
 	--backtitle "$__BTITLE" \
 	--title "LAMPW Script 1.0" \
@@ -158,15 +170,7 @@ dialog \
 	--yesno "Este script realizara cambios en la configuracion e instalara paquetes ¿Desea continuar?" 10 70
 case $response in
     0)
-        updaterepo
-        updatepack
-        installapache
-        installmariadb
-        configmariadbwp
-        downloadwordpress
-        decompresswp
-        configfirewall
-        systemctl reload apache2
+	executefunctions;;
    ;;
    1)
         exit 1
