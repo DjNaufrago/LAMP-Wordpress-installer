@@ -67,7 +67,6 @@ installapache() {
       --title "Instalando Apache" \
       --msgbox "$__RESULT" 10 70 
   fi
-  sed -i 's/DirectoryIndex/DirectoryIndex index.php/' /etc/apache2/mods-enabled/dir.conf
 }
 
 installmariadb() {
@@ -118,7 +117,6 @@ downloadwordpress() {
     --backtitle "$__BTITLE" \
     --title "WordPress" \
     --gauge "Descargando..." 10 100
-#  tar -xzf latest.tar.gz
 }
 
 decompresswp() {
@@ -137,6 +135,8 @@ decompresswp() {
       --msgbox "Estableciendo permisos..." 10 70
   rm latest.tar.gz
   rm -r wordpress/
+  rm -rf /var/www/html/index.html
+  sed -i 's/DirectoryIndex/DirectoryIndex index.php/' /etc/apache2/mods-enabled/dir.conf
 }
 
 configfirewall() {
