@@ -31,4 +31,4 @@ This script performs the unattended installation of the Apache web server, the M
 
 Once the script is executed, WordPress can be accessed with the ip of the instance.
 
-The user data, passwords and name of the database, are in the file log.txt.
+The user data, passwords and name of the database, are in the file log.txt (Do not delete this file!).
