@@ -147,24 +147,20 @@ configfirewall() {
   echo y | ufw enable
 }
 
-executefunctions() {
-	updaterepo
-        updatepack
-        installapache
-        installmariadb
-        configmariadbwp
-        downloadwordpress
-        decompresswp
-        configfirewall
-        systemctl reload apache2
-}
-
 dialog \
 	--backtitle "$__BTITLE" \
 	--title "LAMPW Script 1.0" \
 	--msgbox "Instalador de servidor LAMP para Wordpress." 10 70
-
-executefunctions
+	
+updaterepo
+updatepack
+installapache
+installmariadb
+configmariadbwp
+downloadwordpress
+decompresswp
+configfirewall
+systemctl reload apache2
 
 dialog --clear
 echo -e "\n${Green} * Fin del proceso. ${Color_Off}"
