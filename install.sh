@@ -170,7 +170,7 @@ dialog \
 	--yesno "Este script realizara cambios en la configuracion e instalara paquetes ¿Desea continuar?" 10 70
 case $response in
     0)
-	executefunctions;;
+	executefunctions
    ;;
    1)
         exit 1
