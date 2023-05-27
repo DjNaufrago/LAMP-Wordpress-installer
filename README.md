@@ -3,17 +3,18 @@ Bash scrip LAMP and WordPress unattended installer (BETA Version)
 
 This script performs the unattended installation of the Apache web server, the MariaDB database engine, the modules for interpreting PHP, and the WordPress content management system.
 
-Pre-Requisites:
-- Instancia EC2 (AWS) con Ubuntu Server 22.04
+## Pre-Requisites:
+- EC2 (AWS) instance with Ubuntu Server 22.04
 
-Download:
-- wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh
+## Download:
+- 'wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh'
 
-Perform:
-- sudo bash ./install.sh
+## Perform:
+- 'sudo bash ./install.sh'
 
-Things to do:
+## Things to do:
 - Install necessary packages: Dialog, pwgen.
+- Create the file log.txt
 - Update package repositories.
 - Update packages that require it.
 - Install Apache2 Web Server.
@@ -29,3 +30,5 @@ Things to do:
 - Restart the web server for it to take the changes.
 
 Once the script is executed, WordPress can be accessed with the ip of the instance.
+
+The user data, passwords and name of the database, are in the file log.txt.
