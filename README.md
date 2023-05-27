@@ -5,6 +5,7 @@ This script performs the unattended installation of the Apache web server, the M
 
 ## Pre-Requisites:
 - EC2 (AWS) instance with Ubuntu Server 22.04
+- Allow SSH, HTTP and HTTPS traffic from anywhere (0.0.0.0/0).
 
 ## Download:
 `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh`
