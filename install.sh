@@ -164,22 +164,7 @@ dialog \
 	--title "LAMPW Script 1.0" \
 	--msgbox "Instalador de servidor LAMP para Wordpress." 10 70
 
-dialog \
-	--backtitle "$__BTITLE" \
-	--title "Accion requerida" \
-	--yesno "Este script realizara cambios en la configuracion e instalara paquetes ¿Desea continuar?" 10 70
-case $response in
-    0)
-	executefunctions
-   ;;
-   1)
-        exit 1
-        echo "Proceso cancelado por el usuario" >> log.txt
-   ;;
-   255)
-        echo "[ESC] key pressed." >> log.txt
-   ;;
-esac	
+executefunctions
 
 dialog --clear
 echo -e "\n${Green} * Fin del proceso. ${Color_Off}"
