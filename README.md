@@ -7,10 +7,10 @@ This script performs the unattended installation of the Apache web server, the M
 - EC2 (AWS) instance with Ubuntu Server 22.04
 
 ## Download:
-- 'wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh'
+`wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh`
 
 ## Perform:
-- 'sudo bash ./install.sh'
+`sudo bash ./install.sh`
 
 ## Things to do:
 - Install necessary packages: Dialog, pwgen.
