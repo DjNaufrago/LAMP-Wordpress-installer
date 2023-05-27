@@ -1,12 +1,12 @@
 #!bin/bash
 
 #
-#        Autor:   Reinaldo Moreno
-#  Descripcion:   Instalador de servidor web Apache, modulos PHP,
-#                 base de datos MariaDB, configuracion de firewall
-#                 y Wordpress.
+#       Author:   Reinaldo Moreno
+#  Description:   Apache web server installer, PHP modules,
+#                 MariaDB database, firewall configuration
+#                 and Wordpress.
 #           SO:   Ubuntu Server 22.04
-# Arquitectura:   Instancia EC2 Amazon Web Service
+# Architecture:   EC2 Amazon Web Service Instance
 #
 
 # Color
