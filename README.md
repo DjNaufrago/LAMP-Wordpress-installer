@@ -14,20 +14,25 @@ This script performs the unattended installation of the Apache web server, the M
 `sudo bash ./install.sh`
 
 ## Things to do:
-- Install necessary packages: Dialog, pwgen.
-- Create the file log.txt
-- Update package repositories.
+- Create the file log.txt.
+- Add repository universe.
+- Update repositories and install.
 - Update packages that require it.
 - Install Apache2 Web Server.
+- Install PHP modules.
 - Install MariaDB Database Manager.
   - Automatically generates the password for the root user of the database manager.
   - Create the username, password and database for WordPress.
+  - Remove anonymous users.
+  - Remove remote access.
+  - Delete test database.
 - Download the latest version of WordPress.
   - Unzip the downloaded file.
   - Move the content to the /var/www/html folder
-- Sets the permissions for the current user.
-- Adds features to the web server to make Wordpress the default page.
+  - Sets the permissions for the current user.
+  - Adds features to the web server to make Wordpress the default page.
 - Set rules on the firewall to give access to ssh, http, https.
+- Clean installation cache and files that are no longer needed.
 - Restart the web server for it to take the changes.
 
 Once the script is executed, WordPress can be accessed with the ip of the instance.
