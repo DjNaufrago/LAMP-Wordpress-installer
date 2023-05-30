@@ -78,7 +78,7 @@ installphp() {
 # Remove anonymous users, remove remote access and delete test database.
 installmariadb() {
   DB_ROOT_PASS="$(pwgen -1 -s 16)"
-  echo "$(date "+%F - %T) - Generating root key for MariaDB = $DB_ROOT_PASS" >> log.txt
+  echo "$(date "+%F - %T") - Generating root key for MariaDB = $DB_ROOT_PASS" >> log.txt
   apt-get install -qq mariadb-server 2>&1 | dialog \
     --backtitle "$DTITLE" \
     --title "Installing MariaDB" \
