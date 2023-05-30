@@ -9,10 +9,10 @@
 # Architecture:   EC2 Amazon Web Service Instance
 #
 
-Yellow='\033[0;33m'       # Yellow
-Color_Off='\033[0m'       # Reset
-
 startinstall() {
+  Yellow='\033[0;33m'       # Yellow
+  Color_Off='\033[0m'       # Reset
+
   echo -e "${Yellow} * Starting installation... ${Color_Off}"
   touch log.txt
   echo "Unattended installation of LAMP server and" >> log.txt
@@ -129,10 +129,10 @@ downloadinstallwp() {
 
   echo "$(date "+%F - %T") - Enabling configuration in apache2.conf." >> log.txt
   URLFILE="/etc/apache2/apache2.conf"
-	NEWTEXT="AllowOverride All"
-	LINENUMBER="$( (awk '/<Directory \/var\/www\/>/,/<\/Directory>/ {printf NR "  "; print}' \
-    /home/ubuntu/apache2.conf | grep AllowOverride) | grep -Eo '[0-9]{1,3}' )"
-  sed -i "${LINENUMBER}s/.*/\t&$NEWTEXT/" $URLFILE
+  NEWTEXT="AllowOverride All"
+  LINENUMBER="$( (awk '/<Directory \/var\/www\/>/,/<\/Directory>/ {printf NR "  "; print}' \
+    $URLFILE | grep AllowOverride) | grep -Eo '[0-9]{1,3}' )"
+  sed -i "${LINENUMBER}s/.*/$NEWTEXT/" $URLFILE
 }
 
 # Set rules on the firewall to give access to ssh, http, https.
