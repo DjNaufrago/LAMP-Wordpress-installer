@@ -12,72 +12,78 @@
 Yellow='\033[0;33m'       # Yellow
 Color_Off='\033[0m'       # Reset
 
-echo -e "${Yellow} * Instalando paquetes necesarios... ${Color_Off}"
+# Add repository, update list and install necessary packages.
+echo -e "${Yellow} * Installing necessary packages... ${Color_Off}"
 touch log.txt
-echo "$(date "+%F - %T) - Creando archivo log." >> log.txt
+echo "$(date "+%F - %T) - Creating log file." >> log.txt
 add-apt-repository -yu universe
-echo "$(date "+%F - %T) - Agregando repositorio UNIVERSE y actualizando lista de paquetes." >> log.txt
+echo "$(date "+%F - %T) - Adding UNIVERSE repository and updating package list." >> log.txt
 apt-get install -yq dialog pwgen
-echo "$(date "+%F - %T) - Instalando dialog y pwgen." >> log.txt
+echo "$(date "+%F - %T) - Installing dialog and pwgen." >> log.txt
 
-DTITLE="Instalacion LAMP Server para WordPress"
-DRESULT="Accion Completada"
+DTITLE="LAMP Server Installation for WordPress"
+DRESULT="Action Completed"
 
+# Install latest packages.
 updatepack() {
   apt-get upgrade -y 2>&1 | dialog \
     --backtitle "$DTITLE" \
-    --title "Actualizando Paquetes" \
+    --title "Updating Packages" \
   	--progressbox 16 60
-    echo "$(date "+%F - %T) - Instalando paquetes mas recientes." >> log.txt
+    echo "$(date "+%F - %T) - Installing latest packages." >> log.txt
   if [ "$?" = 0 ]
   then
     dialog --timeout 3 \
       --backtitle "$DTITLE" \
-      --title "Actualizando Paquetes" \
+      --title "Updating Packages" \
       --msgbox "$DRESULT" 10 70 
   fi
 }
 
+# Install apache web server.
 installapache() {
 	apt-get install -qq apache2 2>&1 | dialog \
     --backtitle "$DTITLE" \
-    --title "Instalando Apache" \
+    --title "Installing Apachee" \
   	--progressbox 16 70
-    echo "$(date "+%F - %T) - Instalando Apache2." >> log.txt
+    echo "$(date "+%F - %T) - Installing Apache2." >> log.txt
   if [ "$?" = 0 ]
   then
     dialog --timeout 3 \
       --backtitle "$DTITLE" \
-      --title "Instalando Apache" \
+      --title "Installing Apache" \
       --msgbox "$DRESULT" 10 70 
   fi
 }
 
+# Install PHP modules.
 installphp() {
   apt-get install -qq sudo apt install php libapache2-mod-php php-mysql \
   php-common php-cli php-common php-json php-opcache php-readline \
   php-mbstring php-gd php-dom php-zip php-curl 2>&1 | dialog \
     --backtitle "$DTITLE" \
-    --title "Instalando PHP" \
+    --title "Installing PHP modules" \
   	--progressbox 16 70
-    echo "$(date "+%F - %T) - Instalando modulos PHP." >> log.txt
+    echo "$(date "+%F - %T) - Installing PHP modules." >> log.txt
   if [ "$?" = 0 ]
   then
     dialog --timeout 3 \
       --backtitle "$DTITLE" \
-      --title "Instalando PHP" \
+      --title "Installing PHP modules" \
       --msgbox "$DRESULT" 10 70 
   fi
 }
 
+# Install MariaDB Server and generate key for root user.
+# Remove anonymous users, remove remote access and delete test database.
 installmariadb() {
   DB_ROOT_PASS="$(pwgen -1 -s 16)"
-  echo "$(date "+%F - %T) - Generando clave root para MariaDB = $DB_ROOT_PASS" >> log.txt
+  echo "$(date "+%F - %T) - Generating root key for MariaDB = $DB_ROOT_PASS" >> log.txt
   apt-get install -qq mariadb-server 2>&1 | dialog \
     --backtitle "$DTITLE" \
-    --title "Instalando MariaDB" \
+    --title "Installing MariaDB" \
   	--progressbox 16 60
-    echo "$(date "+%F - %T) - Instalando MariaBD." >> log.txt
+    echo "$(date "+%F - %T) - Installing MariaDB." >> log.txt
   if [ "$?" = 0 ]
   then
     mysql -e "UPDATE mysql.global_priv SET priv=json_set(priv, '$.plugin', \
@@ -85,15 +91,15 @@ installmariadb() {
       PASSWORD('$DB_ROOT_PASS')) WHERE User='root';" | dialog \
       --timeout 3 \
       --backtitle "$DTITLE" \
-      --title "Instalando MariaDB" \
-      --msgbox "Configurando base de datos y usuario..." 10 70 
-      echo "$(date "+%F - %T) - Estableciendo permisos de administración." >> log.txt
+      --title "Installing MariaDB" \
+      --msgbox "Configuring database and user..." 10 70 
+      echo "$(date "+%F - %T) - Setting admin permissions." >> log.txt
     
     mysql -e "FLUSH PRIVILEGES;" | dialog \
       --timeout 3 \
       --backtitle "$DTITLE" \
-      --title "Instalando MariaDB" \
-      --msgbox "Aplicando privilegos" 10 70    
+      --title "Installing MariaDB" \
+      --msgbox "applying privileges." 10 70    
     
     mysql -u root -p$DB_ROOT_PASS -e "DELETE FROM mysql.user WHERE User='';\
       DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');\
@@ -102,40 +108,42 @@ installmariadb() {
       FLUSH PRIVILEGES;" | dialog \
       --timeout 3 \
       --backtitle "$DTITLE" \
-      --title "Instalando MariaDB" \
-      --msgbox "Eliminando tablas y usuarios inseguros..." 10 70
-    echo "$(date "+%F - %T) - Eliminando usuarios anonimos en MariaDB." >> log.txt
-    echo "$(date "+%F - %T) - Eliminando acceso remoto a las bases de datos." >> log.txt
-    echo "$(date "+%F - %T) - Eliminando base de datos de prueba." >> log.txt
-    echo "$(date "+%F - %T) - Aplicando cambios." >> log.txt
+      --title "Installing MariaDB" \
+      --msgbox "Deleting anonymous users..." 10 70
+    echo "$(date "+%F - %T) - Deleting anonymous users in MariaDB." >> log.txt
+    echo "$(date "+%F - %T) - Removing remote access to databases." >> log.txt
+    echo "$(date "+%F - %T) - Deleting test database." >> log.txt
+    echo "$(date "+%F - %T) - Applying changes." >> log.txt
   fi
 }
 
+# Generate database key, create user and database for wordpress.
 configmariadbwp() {
   WP_DB_NAME="dbwordpress"
   WP_DB_USER="userwp"
   WP_DB_PASS="$(pwgen -1 -s 16)"
-  echo "$DFECHA - Generando clave para usuario WordPress." >> log.txt
+  echo "$DFECHA - Generating password for WordPress user." >> log.txt
 
-  echo "# ========== DATOS Y CONTRASEÑAS MARIADB Y WORDPRESS ==========" >> log.txt
+  echo "# ===== MARIADB AND WORDPRESS DETAILS AND PASSWORDS =====" >> log.txt
   echo "# =====" >> log.txt
-  echo "# ===== CONTRASEÑA ROOT MARIA DB:            $DB_ROOT_PASS" >> log.txt
+  echo "# ===== MARIADB ROOT PASSWORD:        $DB_ROOT_PASS" >> log.txt
   echo "# =====" >> log.txt  
-  echo "# ===== NOMBRE BASE DE DATOS WORDPRESS:      $WP_DB_NAME" >> log.txt
-  echo "# ===== USUARIO BASE DE DATOS WORDPRESS:     $WP_DB_USER" >> log.txt
-  echo "# ===== CONTRASEÑA BASE DE DATOS WORDPRESS:  $WP_DB_PASS" >> log.txt
+  echo "# ===== WORDPRESS DATABASE NAME:      $WP_DB_NAME" >> log.txt
+  echo "# ===== WORDPRESS DATABASE USER:      $WP_DB_USER" >> log.txt
+  echo "# ===== WORDPRESS DATABASE PASSWORD:  $WP_DB_PASS" >> log.txt
   echo "# =====" >> log.txt
-  echo "# =============================================================" >> log.txt
+  echo "# ============================================ ===========" >> log.txt
 
   mysql -uroot -p$DB_ROOT_PASS -e "CREATE DATABASE IF NOT EXISTS $WP_DB_NAME; \
     GRANT ALL ON $WP_DB_NAME.* TO '$WP_DB_USER'@'localhost' IDENTIFIED BY '$WP_DB_PASS'; \
     FLUSH PRIVILEGES" | dialog --timeout 3 \
       --backtitle "$__BTITLE" \
-      --title "Configurando Base de Datos y contraseñas." \
+      --title "Configuring Database and passwords." \
       --msgbox "$__RESULT" 10 70
-    echo "$DFECHA - Creando base de datos y usuario para WordPress." >> log.txt
+    echo "$DFECHA - Creating database and user for WordPress." >> log.txt
 }
 
+# Download latest version of wordpress.
 downloadinstallwp() {
   URL="https://wordpress.org/latest.tar.gz"
   wget "$URL" 2>&1 | \
@@ -144,16 +152,18 @@ downloadinstallwp() {
     --backtitle "$DTITLE" \
     --title "WordPress" \
     --gauge "Descargando..." 10 100
-  echo "$(date "+%F - %T) - Descargando la última version de WordPress desde $URL." >> log.txt
+  echo "$(date "+%F - %T) - Downloading the latest version of WordPress from $URL." >> log.txt
 }
 
+# Unzip and move the contents of the directory to /var/www/html.
+# Set values to improve wordpress performance.
 decompressconfigwp() {
 	tar -zxf latest.tar.gz; mv wordpress/* /var/www/html/; rm index.html /var/www/html | \
   dialog --timeout 3 \
     --backtitle "$DTITLE" \
     --title "WordpPress" \
-    --msgbox "Configurando directorio WordPress" 10 70
-    echo "$(date "+%F - %T) - Descomprimiendo archivo y moviendo el contenido." >> log.txt
+    --msgbox "Configuring WordPress directory" 10 70
+    echo "$(date "+%F - %T) - Decompressing file and moving the content." >> log.txt
 
   	adduser $USER www-data \
     && chown -R $USER:www-data /var/www \
@@ -163,9 +173,18 @@ decompressconfigwp() {
       --backtitle "$__BTITLE" \
       --title "WordPress" \
       --msgbox "Estableciendo permisos..." 10 70
-    echo "$(date "+%F - %T) - Estableciendo permisos al directorio web al usuario $USER." >> log.txt
+    echo "$(date "+%F - %T) - Setting permissions to the web directory to the user $USER." >> log.txt
     sed -i 's/DirectoryIndex/DirectoryIndex index.php/' /etc/apache2/mods-enabled/dir.conf
-    echo "$(date "+%F - %T) - Agregando entrada al config index." >> log.txt
+    echo "$(date "+%F - %T) - Adding an entry to the config index." >> log.txt
+
+  echo "" >> /var/www/html/.htaccess  
+  echo "php_value memory_limit 256M" >> /var/www/html/.htaccess
+  echo "php_value upload_max_filesize 64M" >> /var/www/html/.htaccess
+  echo "php_value post_max_size 64M" >> /var/www/html/.htaccess
+  echo "php_value max_execution_time 300" >> /var/www/html/.htaccess
+  echo "php_value max_input_time 1000" >> /var/www/html/.htaccess
+  echo "" >> /var/www/html/wp-config.php
+  echo "define( 'FS_METHOD', 'direct' );" >> /var/www/html/wp-config.php
 
   URLFILE="/etc/apache2/apache2.conf"
 
@@ -187,15 +206,16 @@ decompressconfigwp() {
     N;N;N;N
     s/$cpattern/$creplacement/
   }" $URLFILE
-  echo "$(date "+%F - %T) - Habilitando configuracion en apache2.conf." >> log.txt
+  echo "$(date "+%F - %T) - Enabling configuration in apache2.conf." >> log.txt
 }
 
+# Set rules on the firewall to give access to ssh, http, https.
 configfirewall() {
   dialog --timeout 3 \
     --backtitle "$__BTITLE" \
-    --title "Activando Firewall." \
+    --title "Enabling Firewall" \
     --msgbox "$__RESULT" 10 70
-    echo "$(date "+%F - %T) - Estableciendo reglas en el firewall para puertos 22, 80 y 443." >> log.txt
+    echo "$(date "+%F - %T) - Setting firewall rules for ports 22, 80 and 443." >> log.txt
     ufw default deny incoming
     ufw allow ssh
     ufw allow http
@@ -203,16 +223,17 @@ configfirewall() {
     echo y | ufw enable
 }
 
+# Clean installation cache and files that are no longer needed.
 finishclean() {
   dialog --timeout 3 \
 	--backtitle "$DTITLE" \
 	--title "LAMPW Script 1.0" \
-	--msgbox "Fin de la instalación." 10 70
-    echo "$(date "+%F - %T) - Eliminando archivos de instalación que ya no son necesarios." >> log.txt
+	--msgbox "End of installation." 10 70
+    echo "$(date "+%F - %T) - Deleting installation files that are no longer needed.." >> log.txt
     rm latest.tar.gz
     rm -r wordpress/
     rm -rf /var/www/html/index.html
-    echo "$(date "+%F - %T) - Limpiando cache de paquetes." >> log.txt
+    echo "$(date "+%F - %T) - Clearing package cache." >> log.txt
     apt-get clean
     apt-get autoclean
 }
@@ -220,7 +241,7 @@ finishclean() {
 dialog \
 	--backtitle "$DTITLE" \
 	--title "LAMPW Script 1.0" \
-	--msgbox "Instalador de servidor LAMP para Wordpress." 10 70
+	--msgbox "LAMP and Wordpress server installer." 10 70
 
 updatepack
 installapache
@@ -233,4 +254,4 @@ finishclean
 systemctl reload apache2
 
 dialog --clear
-echo -e "\n${Yellow} * Detalles de la instalación en el archivo log.txt. ${Color_Off}"
+echo -e "\n${Yellow} * Installation details in log.txt. DO NOT DELETE THIS FILE.${Color_Off}"
