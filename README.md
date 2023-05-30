@@ -40,7 +40,7 @@ The user data, passwords and name of the database, are in the file log.txt (**Do
 
 **NOTE:** The next addition to the script will be to be able to choose the modules to install, including the installation of the SSL certificate.
 
-**Sources: **
+**Sources:**
 - https://peteris.rocks/blog/unattended-installation-of-wordpress-on-ubuntu-server/
 - https://gist.github.com/beardedinbinary/79d7ad34f9980f0a4c23
 - https://docs.aws.amazon.com/es_es/AWSEC2/latest/UserGuide/install-LAMP.html
