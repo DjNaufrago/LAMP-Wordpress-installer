@@ -15,8 +15,7 @@ This script performs the unattended installation of the Apache web server, the M
 
 ## Things to do:
 - Create the file log.txt.
-- Add repository universe.
-- Update repositories and install.
+- Update repositories list.
 - Update packages that require it.
 - Install Apache2 Web Server.
 - Install PHP modules.
@@ -38,3 +37,17 @@ This script performs the unattended installation of the Apache web server, the M
 Once the script is executed, WordPress can be accessed with the ip of the instance.
 
 The user data, passwords and name of the database, are in the file log.txt (**Do not delete this file!**).
+
+**NOTE:** The next addition to the script will be to be able to choose the modules to install, including the installation of the SSL certificate.
+
+**Sources: **
+- https://peteris.rocks/blog/unattended-installation-of-wordpress-on-ubuntu-server/
+- https://gist.github.com/beardedinbinary/79d7ad34f9980f0a4c23
+- https://docs.aws.amazon.com/es_es/AWSEC2/latest/UserGuide/install-LAMP.html
+- https://docs.aws.amazon.com/es_es/AWSEC2/latest/UserGuide/hosting-wordpress.html
+- https://crunchify.com/setup-wordpress-amazon-aws-ec2/
+- https://github.com/natancabral/shell-script-to-install-multiple-packages/blob/main/run/lamp.sh
+- https://linux.how2shout.com/script-to-install-lamp-wordpress-on-ubuntu-20-04-lts-server-quickly-with-one-command/
+- https://suriyal.com/install-wordpress-on-amazon-ec2-ubuntu-22-04-instance-or-virtual-machine/
+- https://bertvv.github.io/notes-to-self/2015/11/16/automating-mysql_secure_installation/
+- https://unix.stackexchange.com/questions/26284/how-can-i-use-sed-to-replace-a-multi-line-string
