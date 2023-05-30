@@ -31,6 +31,7 @@ This script performs the unattended installation of the Apache web server, the M
   - Sets the permissions for the current user.
   - Adds features to the web server to make Wordpress the default page.
 - Set rules on the firewall to give access to ssh, http, https.
+- The configuration files will be backed up before modifying them.
 - Clean installation cache and files that are no longer needed.
 - Restart the web server for it to take the changes.
 
