@@ -15,11 +15,11 @@ Color_Off='\033[0m'       # Reset
 # Add repository, update list and install necessary packages.
 echo -e "${Yellow} * Installing necessary packages... ${Color_Off}"
 touch log.txt
-echo "$(date "+%F - %T) - Creating log file." >> log.txt
+echo "$(date "+%F - %T") - Creating log file." >> log.txt
 add-apt-repository -yu universe
-echo "$(date "+%F - %T) - Adding UNIVERSE repository and updating package list." >> log.txt
+echo "$(date "+%F - %T") - Adding UNIVERSE repository and updating package list." >> log.txt
 apt-get install -yq dialog pwgen
-echo "$(date "+%F - %T) - Installing dialog and pwgen." >> log.txt
+echo "$(date "+%F - %T") - Installing dialog and pwgen." >> log.txt
 
 DTITLE="LAMP Server Installation for WordPress"
 DRESULT="Action Completed"
@@ -30,7 +30,7 @@ updatepack() {
     --backtitle "$DTITLE" \
     --title "Updating Packages" \
   	--progressbox 16 60
-    echo "$(date "+%F - %T) - Installing latest packages." >> log.txt
+    echo "$(date "+%F - %T") - Installing latest packages." >> log.txt
   if [ "$?" = 0 ]
   then
     dialog --timeout 3 \
@@ -46,7 +46,7 @@ installapache() {
     --backtitle "$DTITLE" \
     --title "Installing Apachee" \
   	--progressbox 16 70
-    echo "$(date "+%F - %T) - Installing Apache2." >> log.txt
+    echo "$(date "+%F - %T") - Installing Apache2." >> log.txt
   if [ "$?" = 0 ]
   then
     dialog --timeout 3 \
@@ -64,7 +64,7 @@ installphp() {
     --backtitle "$DTITLE" \
     --title "Installing PHP modules" \
   	--progressbox 16 70
-    echo "$(date "+%F - %T) - Installing PHP modules." >> log.txt
+    echo "$(date "+%F - %T") - Installing PHP modules." >> log.txt
   if [ "$?" = 0 ]
   then
     dialog --timeout 3 \
@@ -83,7 +83,7 @@ installmariadb() {
     --backtitle "$DTITLE" \
     --title "Installing MariaDB" \
   	--progressbox 16 60
-    echo "$(date "+%F - %T) - Installing MariaDB." >> log.txt
+    echo "$(date "+%F - %T") - Installing MariaDB." >> log.txt
   if [ "$?" = 0 ]
   then
     mysql -e "UPDATE mysql.global_priv SET priv=json_set(priv, '$.plugin', \
@@ -93,7 +93,7 @@ installmariadb() {
       --backtitle "$DTITLE" \
       --title "Installing MariaDB" \
       --msgbox "Configuring database and user..." 10 70 
-      echo "$(date "+%F - %T) - Setting admin permissions." >> log.txt
+      echo "$(date "+%F - %T") - Setting admin permissions." >> log.txt
     
     mysql -e "FLUSH PRIVILEGES;" | dialog \
       --timeout 3 \
@@ -110,10 +110,10 @@ installmariadb() {
       --backtitle "$DTITLE" \
       --title "Installing MariaDB" \
       --msgbox "Deleting anonymous users..." 10 70
-    echo "$(date "+%F - %T) - Deleting anonymous users in MariaDB." >> log.txt
-    echo "$(date "+%F - %T) - Removing remote access to databases." >> log.txt
-    echo "$(date "+%F - %T) - Deleting test database." >> log.txt
-    echo "$(date "+%F - %T) - Applying changes." >> log.txt
+    echo "$(date "+%F - %T") - Deleting anonymous users in MariaDB." >> log.txt
+    echo "$(date "+%F - %T") - Removing remote access to databases." >> log.txt
+    echo "$(date "+%F - %T") - Deleting test database." >> log.txt
+    echo "$(date "+%F - %T") - Applying changes." >> log.txt
   fi
 }
 
@@ -122,7 +122,7 @@ configmariadbwp() {
   WP_DB_NAME="dbwordpress"
   WP_DB_USER="userwp"
   WP_DB_PASS="$(pwgen -1 -s 16)"
-  echo "$DFECHA - Generating password for WordPress user." >> log.txt
+  echo "$(date "+%F - %T") - Generating password for WordPress user." >> log.txt
 
   echo "# ===== MARIADB AND WORDPRESS DETAILS AND PASSWORDS =====" >> log.txt
   echo "# =====" >> log.txt
@@ -140,7 +140,7 @@ configmariadbwp() {
       --backtitle "$__BTITLE" \
       --title "Configuring Database and passwords." \
       --msgbox "$__RESULT" 10 70
-    echo "$DFECHA - Creating database and user for WordPress." >> log.txt
+    echo "$(date "+%F - %T") - Creating database and user for WordPress." >> log.txt
 }
 
 # Download latest version of wordpress.
@@ -152,7 +152,7 @@ downloadinstallwp() {
     --backtitle "$DTITLE" \
     --title "WordPress" \
     --gauge "Descargando..." 10 100
-  echo "$(date "+%F - %T) - Downloading the latest version of WordPress from $URL." >> log.txt
+  echo "$(date "+%F - %T") - Downloading the latest version of WordPress from $URL." >> log.txt
 }
 
 # Unzip and move the contents of the directory to /var/www/html.
@@ -163,7 +163,7 @@ decompressconfigwp() {
     --backtitle "$DTITLE" \
     --title "WordpPress" \
     --msgbox "Configuring WordPress directory" 10 70
-    echo "$(date "+%F - %T) - Decompressing file and moving the content." >> log.txt
+    echo "$(date "+%F - %T") - Decompressing file and moving the content." >> log.txt
 
   	adduser $USER www-data \
     && chown -R $USER:www-data /var/www \
@@ -173,9 +173,9 @@ decompressconfigwp() {
       --backtitle "$__BTITLE" \
       --title "WordPress" \
       --msgbox "Estableciendo permisos..." 10 70
-    echo "$(date "+%F - %T) - Setting permissions to the web directory to the user $USER." >> log.txt
+    echo "$(date "+%F - %T") - Setting permissions to the web directory to the user $USER." >> log.txt
     sed -i 's/DirectoryIndex/DirectoryIndex index.php/' /etc/apache2/mods-enabled/dir.conf
-    echo "$(date "+%F - %T) - Adding an entry to the config index." >> log.txt
+    echo "$(date "+%F - %T") - Adding an entry to the config index." >> log.txt
 
   echo "" >> /var/www/html/.htaccess  
   echo "php_value memory_limit 256M" >> /var/www/html/.htaccess
@@ -206,7 +206,7 @@ decompressconfigwp() {
     N;N;N;N
     s/$cpattern/$creplacement/
   }" $URLFILE
-  echo "$(date "+%F - %T) - Enabling configuration in apache2.conf." >> log.txt
+  echo "$(date "+%F - %T") - Enabling configuration in apache2.conf." >> log.txt
 }
 
 # Set rules on the firewall to give access to ssh, http, https.
@@ -215,7 +215,7 @@ configfirewall() {
     --backtitle "$__BTITLE" \
     --title "Enabling Firewall" \
     --msgbox "$__RESULT" 10 70
-    echo "$(date "+%F - %T) - Setting firewall rules for ports 22, 80 and 443." >> log.txt
+    echo "$(date "+%F - %T") - Setting firewall rules for ports 22, 80 and 443." >> log.txt
     ufw default deny incoming
     ufw allow ssh
     ufw allow http
@@ -229,11 +229,11 @@ finishclean() {
 	--backtitle "$DTITLE" \
 	--title "LAMPW Script 1.0" \
 	--msgbox "End of installation." 10 70
-    echo "$(date "+%F - %T) - Deleting installation files that are no longer needed.." >> log.txt
+    echo "$(date "+%F - %T") - Deleting installation files that are no longer needed.." >> log.txt
     rm latest.tar.gz
     rm -r wordpress/
     rm -rf /var/www/html/index.html
-    echo "$(date "+%F - %T) - Clearing package cache." >> log.txt
+    echo "$(date "+%F - %T") - Clearing package cache." >> log.txt
     apt-get clean
     apt-get autoclean
 }
