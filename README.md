@@ -28,10 +28,11 @@ This script performs the unattended installation of the Apache web server, the M
 - Download the latest version of WordPress.
   - Unzip the downloaded file.
   - Move the content to the /var/www/html folder
-  - Sets the permissions for the current user.
-  - Adds features to the web server to make Wordpress the default page.
+- Sets the permissions for the current user.
+- Adds features to the web server to make Wordpress the default page.
+- Register users and permissions for WordPress
 - Set rules on the firewall to give access to ssh, http, https.
-- The configuration files will be backed up before modifying them.
+- Backup of original files that will be modified.
 - Clean installation cache and files that are no longer needed.
 - Restart the web server for it to take the changes.
 
