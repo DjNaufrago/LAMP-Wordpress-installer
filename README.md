@@ -53,3 +53,4 @@ The user data, passwords and name of the database, are in the file log.txt (**Do
 - https://suriyal.com/install-wordpress-on-amazon-ec2-ubuntu-22-04-instance-or-virtual-machine/
 - https://bertvv.github.io/notes-to-self/2015/11/16/automating-mysql_secure_installation/
 - https://unix.stackexchange.com/questions/26284/how-can-i-use-sed-to-replace-a-multi-line-string
+- https://www.plothost.com/kb/create-wordpress-admin-linux-mysql/
