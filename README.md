@@ -21,7 +21,7 @@ This script performs the unattended installation of the Apache web server, the M
 - Install PHP modules.
 - Install MariaDB Database Manager.
   - Automatically generates the password for the root user of the database manager.
-  - Create the username, password and database for WordPress.
+  - Create the username, password and database for WordPress (6.2.2).
   - Remove anonymous users.
   - Remove remote access.
   - Delete test database.
