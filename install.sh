@@ -78,7 +78,7 @@ configmariadbwp() {
   WP_DB_USER="userwp"
   WP_DB_PASS="$(pwgen -1 -s 16)"
   WP_ADMIN_USER="wpadmin"
-  WP_ADMIN_PASS="$(pwgen -1 -s 16)"
+  WP_ADMIN_PASS="$(pwgen -1 -s 8)"
   WP_PREFIX="wp_"
 
   echo -e '\n' >> log.txt
