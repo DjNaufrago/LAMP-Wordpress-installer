@@ -152,6 +152,7 @@ configweb() {
   echo '=== Copies of the original configuration files were created:' | tee -a /home/ubuntu/log.txt
   echo '=== - /etc/apache2/mods-enabled/dir.conf.bk' | tee -a /home/ubuntu/log.txt
   echo '=== - /etc/apache2/apache2.conf.bk' | tee -a /home/ubuntu/log.txt
+  echo '=== - /etc/php/8.1/apache2/php.ini.bk' | tee -a /home/ubuntu/log.txt
 }
 
 # Set rules on the firewall to give access to ssh, http, https.
