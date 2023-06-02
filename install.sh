@@ -173,21 +173,25 @@ finishcleanrestart() {
   sudo systemctl restart apache2
 }
 
-startinstall
-updateupgrade
-installapache
-installphp
-installmariadb
-configmariadbwp
-downloadinstallconfigwp
-configweb
-configfirewall
-finishcleanrestart
-
-echo -e '\n' >> /home/ubuntu/log.txt
-echo 'Remember to change the WordPress admin email in Settings / General.' >> /home/ubuntu/log.txt
-echo -e "\n${Yellow} * WORDPRESS IS READY!!!${Yellow}"
-echo -e "\n${Green} * Installation details in /home/ubuntu/log.txt.${Green}"
-echo -e "\n${Yellow} * DO NOT DELETE THIS FILE BEFORE COPYING THE DATA.${Yellow}"
-echo -e "\n${Green} * You can access through your domain name or public ip address.${Green}"
-echo -e "\n${Green} * To manage your site: domain/wp-admin or IP/wp-admin.${Green}"
+RUNFOLDER="/var/www/html"
+if [ $PWD != $RUNFOLDER]; then
+  startinstall
+  updateupgrade
+  installapache
+  installphp
+  installmariadb
+  configmariadbwp
+  downloadinstallconfigwp
+  configweb
+  configfirewall
+  finishcleanrestart
+  echo -e '\n' >> /home/ubuntu/log.txt
+  echo 'Remember to change the WordPress admin email in Settings / General.' >> /home/ubuntu/log.txt
+  echo -e "\n${Yellow} * WORDPRESS IS READY!!!${Yellow}"
+  echo -e "\n${Green} * Installation details in /home/ubuntu/log.txt.${Green}"
+  echo -e "\n${Yellow} * DO NOT DELETE THIS FILE BEFORE COPYING THE DATA.${Yellow}"
+  echo -e "\n${Green} * You can access through your domain name or public ip address.${Green}"
+  echo -e "\n${Green} * To manage your site: domain/wp-admin or IP/wp-admin.${Green}"
+else
+  echo -e "\n${Yellow} * ERROR * YOU MUST RUN THE SCRIPT INSIDE THE FOLDER: $RUNFOLDER.${Yellow}"
+fi
