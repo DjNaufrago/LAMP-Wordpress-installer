@@ -11,16 +11,20 @@ Please read the installation steps carefully.
 - EC2 (AWS) instance with Ubuntu Server 22.04
 - Allow SSH, HTTP and HTTPS traffic from anywhere (0.0.0.0/0).
 
-## Instructions:
+## Instructions install-lamp:
 1. Inside the user directory, download the following file:
 2. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-lamp.sh`
 3. Run the script as follows:
 4. bash ./install-lamp.sh
-5. move to /var/www/html directory
-6. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh`
-7. `bash ./install.sh`
+5. Done, you now have a LAMP server up and running.
 
-## Things to do:
+## Instructions install-worpdress:
+6. move to /var/www/html directory and download:
+7. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-wordpress.sh`
+8. Run the script as follows:
+9. `bash ./install-wordpress.sh`
+
+## Tasks to configure the LAMP server:
 ### startinstall:
   - Create the file log.txt.
 ### updateupgrade
@@ -36,6 +40,14 @@ Please read the installation steps carefully.
   - Remove anonymous users.
   - Remove remote access.
   - Delete test database.
+  - **Note:** With this script, it is not necessary to run the secure installation for the database.
+### configfirewall
+  - Set rules on the firewall to give access to ssh, http, https.
+### finishcleanrestart
+  - Clean installation cache and files that are no longer needed.
+  - Restart the web server for it to take the changes.
+
+## Tasks to configure Wordpress:
 ### configmariadbwp
   - Create the username, password and database for WordPress.
 ### downloadinstallconfigwp
@@ -46,11 +58,7 @@ Please read the installation steps carefully.
 ### configweb
   - Adds features to the web server to make Wordpress the default page.
   - Backup of original files that will be modified.
-### configfirewall
-  - Set rules on the firewall to give access to ssh, http, https.
-### finishcleanrestart
-  - Clean installation cache and files that are no longer needed.
-  - Restart the web server for it to take the changes.
+
 
 Once the script is executed, can access WordPress through your domain name or public ip address.
 
