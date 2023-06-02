@@ -8,9 +8,9 @@ This script performs the unattended installation of the Apache web server, the M
 - Allow SSH, HTTP and HTTPS traffic from anywhere (0.0.0.0/0).
 
 ## Download and perform:
-1 - move to /var/www/html directory
-2 - `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh`
-3 - `sudo bash ./install.sh`
+1. move to /var/www/html directory
+2. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh`
+3. `sudo bash ./install.sh`
 
 ## Things to do:
 ### startinstall:
