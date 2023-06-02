@@ -1,5 +1,5 @@
 # LAMP-Wordpress-installer
-Bash scrip LAMP and WordPress unattended installer (BETA Version)
+Bash scrip LAMP and WordPress unattended installer
 
 This script performs the unattended installation of the Apache web server, the MariaDB database engine, the modules for interpreting PHP, and the WordPress content management system.
 
@@ -7,38 +7,48 @@ This script performs the unattended installation of the Apache web server, the M
 - EC2 (AWS) instance with Ubuntu Server 22.04
 - Allow SSH, HTTP and HTTPS traffic from anywhere (0.0.0.0/0).
 
-## Download:
-`wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh`
-
-## Perform:
-`sudo bash ./install.sh`
+## Download and perform:
+1 - move to /var/www/html directory
+2 - `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install.sh`
+3 - `sudo bash ./install.sh`
 
 ## Things to do:
-- Create the file log.txt.
-- Update repositories list.
-- Update packages that require it.
-- Install Apache2 Web Server.
+### startinstall:
+  - Create the file log.txt.
+### updateupgrade
+  - Update repositories list.
+  - Update packages that require it.
+### installapache
+  - Install Apache2 Web Server.
+### installphp
 - Install PHP modules.
-- Install MariaDB Database Manager.
+### installmariadb
+  - Install MariaDB Database Manager.
   - Automatically generates the password for the root user of the database manager.
-  - Create the username, password and database for WordPress.
   - Remove anonymous users.
   - Remove remote access.
   - Delete test database.
-- Download the latest version of WordPress (6.2.2).
-  - Unzip the downloaded file.
-  - Move the content to the /var/www/html folder
-- Sets the permissions for the current user.
-- Adds features to the web server to make Wordpress the default page.
-- Register users and permissions for WordPress
-- Set rules on the firewall to give access to ssh, http, https.
-- Backup of original files that will be modified.
-- Clean installation cache and files that are no longer needed.
-- Restart the web server for it to take the changes.
+### configmariadbwp
+  - Create the username, password and database for WordPress.
+### downloadinstallconfigwp
+  - Download the latest core version of WordPress.
+  - Register users in web group.
+  - Configure and install WordPress.
+  - Set the proper permissions for web files and directories.
+### configweb
+  - Adds features to the web server to make Wordpress the default page.
+  - Backup of original files that will be modified.
+### configfirewall
+  - Set rules on the firewall to give access to ssh, http, https.
+### finishcleanrestart
+  - Clean installation cache and files that are no longer needed.
+  - Restart the web server for it to take the changes.
 
-Once the script is executed, WordPress can be accessed with the ip of the instance.
+Once the script is executed, can access WordPress through your domain name or public ip address.
 
-The user data, passwords and name of the database, are in the file log.txt (**Do not delete this file!**).
+**To manage your site:** domain/wp-admin or IP/wp-admin
+
+The user data, passwords and name of the database, are in the file log.txt (**DO NOT DELETE THIS FILE BEFORE COPYING THE DATA!**).
 
 **NOTE:** The next addition to the script will be to be able to choose the modules to install, including the installation of the SSL certificate.
 
