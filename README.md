@@ -22,8 +22,9 @@ Please read the installation steps carefully.
 ## INSTRUCTIONS INSTALL WORDPRESS:
 6. move to /var/www/html directory and download:
 7. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-wordpress.sh`
-8. Run the script as follows:
-9. `bash ./install-wordpress.sh`
+8. Copy MariaDB Root Password from /home/ubuntu/log.txt and paste inside install-wordpress.sh variable.
+9. Run the script as follows:
+10. `bash ./install-wordpress.sh`
 
 ## TASKS TO CONFIGURE THE LAMP SERVER:
 ### startinstall:
