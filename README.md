@@ -7,24 +7,25 @@ The second script installs the WordPress content management system.
 
 Please read the installation steps carefully.
 
-## Pre-Requisites:
+## PRE-REQUISITESs:
 - EC2 (AWS) instance with Ubuntu Server 22.04
 - Allow SSH, HTTP and HTTPS traffic from anywhere (0.0.0.0/0).
 
-## Instructions install-lamp:
+## INSTRUCTIONS INSTALL LAMP:
 1. Inside the user directory, download the following file:
 2. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-lamp.sh`
 3. Run the script as follows:
 4. bash ./install-lamp.sh
 5. Done, you now have a LAMP server up and running.
+6. can access through your domain name or public ip address.
 
-## Instructions install-worpdress:
+## INSTRUCTIONS INSTALL WORDPRESS:
 6. move to /var/www/html directory and download:
 7. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-wordpress.sh`
 8. Run the script as follows:
 9. `bash ./install-wordpress.sh`
 
-## Tasks to configure the LAMP server:
+## TASKS TO CONFIGURE THE LAMP SERVER:
 ### startinstall:
   - Create the file log.txt.
 ### updateupgrade
@@ -47,7 +48,7 @@ Please read the installation steps carefully.
   - Clean installation cache and files that are no longer needed.
   - Restart the web server for it to take the changes.
 
-## Tasks to configure Wordpress:
+## TASKS TO CONFIGURE WORDPRESS:
 ### configmariadbwp
   - Create the username, password and database for WordPress.
 ### downloadinstallconfigwp
