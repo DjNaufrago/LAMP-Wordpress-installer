@@ -14,7 +14,7 @@ Please read the installation steps carefully.
 ## INSTRUCTIONS INSTALL LAMP:
 1. Inside the user directory, download the following file:
 2. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-lamp.sh`
-3. Run the script as follows:
+3. Run the script as follows (no sudo):
 4. bash ./install-lamp.sh
 5. Done, you now have a LAMP server up and running.
 6. Can access through your domain name or public ip address.
@@ -24,7 +24,7 @@ Please read the installation steps carefully.
 1. Move to /var/www/html directory and download:
 2. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-wordpress.sh`
 3. The log.txt file from the previous installation must be in the /home/ubuntu directory and must not have been modified. The script will extract from there the root key of the database.
-4 Run the script as follows:
+4 Run the script as follows (no sudo):
 5. `bash ./install-wordpress.sh`
 6. Done, WordPress is installed and running.
 7. Can access through your domain name or public ip address.
