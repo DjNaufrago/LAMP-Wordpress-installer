@@ -7,7 +7,7 @@ The second script installs the WordPress content management system.
 
 Please read the installation steps carefully.
 
-## PRE-REQUISITESs:
+## PRE-REQUISITESS:
 - EC2 (AWS) instance with Ubuntu Server 22.04
 - Allow SSH, HTTP and HTTPS traffic from anywhere (0.0.0.0/0).
 
