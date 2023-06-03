@@ -17,14 +17,19 @@ Please read the installation steps carefully.
 3. Run the script as follows:
 4. bash ./install-lamp.sh
 5. Done, you now have a LAMP server up and running.
-6. can access through your domain name or public ip address.
+6. Can access through your domain name or public ip address.
+7. The database root password is in log.txt.
 
 ## INSTRUCTIONS INSTALL WORDPRESS:
-6. move to /var/www/html directory and download:
-7. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-wordpress.sh`
-8. Copy MariaDB Root Password from /home/ubuntu/log.txt and paste inside install-wordpress.sh variable.
-9. Run the script as follows:
-10. `bash ./install-wordpress.sh`
+1. Move to /var/www/html directory and download:
+2. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-wordpress.sh`
+3. The log.txt file from the previous installation must be in the /home/ubuntu directory and must not have been modified. The script will extract from there the root key of the database.
+4 Run the script as follows:
+5. `bash ./install-wordpress.sh`
+6. Done, WordPress is installed and running.
+7. Can access through your domain name or public ip address.
+8. Users, passwords and other data are in log.txt.
+9. **To manage your site:** domain/wp-admin or IP/wp-admin
 
 ## TASKS TO CONFIGURE THE LAMP SERVER:
 ### startinstall:
@@ -62,11 +67,7 @@ Please read the installation steps carefully.
   - Backup of original files that will be modified.
 
 
-Once the script is executed, can access WordPress through your domain name or public ip address.
-
-**To manage your site:** domain/wp-admin or IP/wp-admin
-
-The user data, passwords and name of the database, are in the file log.txt (**DO NOT DELETE THIS FILE BEFORE COPYING THE DATA!**).
+**DO NOT DELETE THE LOG.TXT FILE BEFORE BACKING UP THE DATA!**).
 
 **NOTE:** The next addition to the script will be to be able to choose the modules to install, including the installation of the SSL certificate.
 
