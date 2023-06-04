@@ -1,4 +1,4 @@
-# LAMP-Wordpress-installers
+# LAMP / WORDPRESS - INSTALLERS
 Bash scrip LAMP and WordPress unattended installers
 
 The first script performs the unattended installation of the Apache web server, the MariaDB database engine, the modules for interpreting PHP, and configures the firewall.
@@ -30,6 +30,11 @@ Please read the installation steps carefully.
 7. Can access through your domain name or public ip address.
 8. Users, passwords and other data are in log.txt.
 9. **To manage your site:** domain/wp-admin or IP/wp-admin
+
+**DO NOT DELETE THE LOG.TXT FILE BEFORE BACKING UP THE DATA!**
+
+## KERNEL MESSAGES
+During installation, the operating system will prompt you that some kernel service modules need to be restarted. Accept everything and choose OK. The installation will continue without issue without the need to reboot the entire instance.
 
 ## TASKS TO CONFIGURE THE LAMP SERVER:
 ### startinstall:
@@ -65,9 +70,6 @@ Please read the installation steps carefully.
 ### configweb
   - Adds features to the web server to make Wordpress the default page.
   - Backup of original files that will be modified.
-
-
-**DO NOT DELETE THE LOG.TXT FILE BEFORE BACKING UP THE DATA!**).
 
 **NOTE:** The next addition to the script will be to be able to choose the modules to install, including the installation of the SSL certificate.
 
