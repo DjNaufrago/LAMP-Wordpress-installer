@@ -21,15 +21,17 @@ Please read the installation steps carefully.
 7. The database root password is in log.txt.
 
 ## INSTRUCTIONS INSTALL WORDPRESS:
-1. Move to /var/www/html directory and download:
-2. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-wordpress.sh`
-3. The log.txt file from the previous installation must be in the /home/ubuntu directory and must not have been modified. The script will extract from there the root key of the database.
-4. Run the script as follows (no sudo):
-5. `bash ./install-wordpress.sh`
-6. Done, WordPress is installed and running.
-7. Can access through your domain name or public ip address.
-8. Users, passwords and other data are in log.txt.
-9. **To manage your site:** domain/wp-admin or IP/wp-admin
+1. First, let's temporarily make our user the owner of the web folder (the script at the end will take care of undoing this).
+2. `sudo chown -R $USER:www-data /var/www/`
+3. Move to /var/www/html directory and download:
+4. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-wordpress.sh`
+5. The log.txt file from the previous installation must be in the /home/ubuntu directory and must not have been modified. The script will extract from there the root key of the database.
+6. Run the script as follows (no sudo):
+7. `bash ./install-wordpress.sh`
+8. Done, WordPress is installed and running.
+9. Can access through your domain name or public ip address.
+10. Users, passwords and other data are in log.txt.
+11. **To manage your site:** domain/wp-admin or IP/wp-admin
 
 **DO NOT DELETE THE LOG.TXT FILE BEFORE BACKING UP THE DATA!**
 
