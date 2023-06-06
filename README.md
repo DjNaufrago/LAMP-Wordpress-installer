@@ -17,8 +17,9 @@ Please read the installation steps carefully.
 3. Run the script as follows (no sudo):
 4. bash ./install-lamp.sh
 5. Done, you now have a LAMP server up and running.
-6. Can access through your domain name or public ip address.
-7. The database root password is in log.txt.
+
+Can access through your domain name or public ip address.
+The database root password is in log.txt.
 
 ## INSTRUCTIONS INSTALL WORDPRESS:
 1. First, let's temporarily make our user the owner of the web folder (the script at the end will take care of undoing this).
@@ -29,9 +30,10 @@ Please read the installation steps carefully.
 6. Run the script as follows (no sudo):
 7. `bash ./install-wordpress.sh`
 8. Done, WordPress is installed and running.
-9. Can access through your domain name or public ip address.
-10. Users, passwords and other data are in log.txt.
-11. **To manage your site:** domain/wp-admin or IP/wp-admin
+
+Can access through your domain name or public ip address.
+Users, passwords and other data are in log.txt.
+**To manage your site:** domain/wp-admin or IP/wp-admin
 
 **DO NOT DELETE THE LOG.TXT FILE BEFORE BACKING UP THE DATA!**
 
