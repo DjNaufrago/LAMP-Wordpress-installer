@@ -90,7 +90,6 @@ finishcleanrestart() {
   sudo adduser $USER www-data
   sudo chmod g+w /var/www -R
   sudo chown -R www-data:www-data /var/www/
-  sudo chown -R $USER:www-data /var/www/
   echo "$(date "+%F - %T") - Clearing package cache an restart web service." | tee -a /home/ubuntu/log.txt
   apt-get clean
   apt-get autoclean
