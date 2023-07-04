@@ -91,8 +91,8 @@ finishcleanrestart() {
   sudo chmod g+w /var/www -R
   sudo chown -R www-data:www-data /var/www/
   echo "$(date "+%F - %T") - Clearing package cache an restart web service." | tee -a $HOME/log.txt
-  apt-get clean
-  apt-get autoclean
+  sudo apt-get clean
+  sudo apt-get autoclean
   sudo systemctl restart apache2
 }
 
@@ -104,11 +104,11 @@ installconfigmariadb
 configfirewall
 finishcleanrestart
 
-echo -e '\n' >> /home/ubuntu/log.txt
+echo -e '\n' >> $HOME/log.txt
 echo '# ============ MARIADB ROOT PASSWORD ============' >> $HOME/log.txt
-echo '# =====' >> /home/ubuntu/log.txt
+echo '# =====' >> $HOME/log.txt
 echo "# ===== MARIADB ROOT PASSWORD: $DB_ROOT_PASS" >> $HOME/log.txt
-echo '# =====' >> /home/ubuntu/log.txt
+echo '# =====' >> $HOME/log.txt
 
 echo -e "\n${Yellow} * LAMP SERVER IS READY!!!${Color_Off}"
 echo -e "\n${Green} * Installation details in /home/ubuntu/log.txt.${Color_Off}"
