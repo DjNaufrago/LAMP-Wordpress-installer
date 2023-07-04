@@ -9,7 +9,7 @@
 # Architecture:   EC2 Amazon Web Service Instance
 #
 
-MDBRP="$(grep "MARIADB ROOT" /home/ubuntu/log.txt)"
+MDBRP="$(grep "MARIADB ROOT" $HOME/log.txt)"
 DB_ROOT_PASS="${MDBRP: -16}"
 
 startinstall() {
@@ -19,16 +19,16 @@ startinstall() {
   Yellow='\033[0;33m'       # Yellow
 
   echo -e "${Yellow} * Starting installation... ${Color_Off}"
-  echo -e '\n' >> /home/ubuntu/log.txt  
-  echo '# ========================== WORDPRESS =============================' >> /home/ubuntu/log.txt
-  echo -e '\n' >> /home/ubuntu/log.txt 
-  echo "Unattended installation of WordPress" | tee -a /home/ubuntu/log.txt
-  echo "Author - Reinaldo Moreno" | tee -a /home/ubuntu/log.txt
+  echo -e '\n' >> $HOME/log.txt 
+  echo '# ========================== WORDPRESS =============================' >> $HOME/log.txt
+  echo -e '\n' >> $HOME/log.txt
+  echo "Unattended installation of WordPress" | tee -a $HOME/log.txt
+  echo "Author - Reinaldo Moreno" | tee -a $HOME/log.txt
 }
 
 # Generate database key, create user and database for wordpress.
 configmariadbwp() {
-  echo "$(date "+%F - %T") - Generating password for WordPress user." | tee -a /home/ubuntu/log.txt
+  echo "$(date "+%F - %T") - Generating password for WordPress user." | tee -a $HOME/log.txt
   WP_DB_NAME="dbwordpress"
   WP_DB_USER="userwp"
   WP_DB_PASS="$(pwgen -1 -s 16)"
@@ -38,41 +38,41 @@ configmariadbwp() {
   MY_IP="$(curl https://checkip.amazonaws.com)"
 
   echo -e '\n' >> /home/ubuntu/log.txt
-  echo '# ===== WORDPRESS USER, DATABASE AND PASSWORDS =====' >> /home/ubuntu/log.txt
-  echo '# =====' >> /home/ubuntu/log.txt
-  echo "# ===== WORDPRESS DATABASE NAME: $WP_DB_NAME" >> /home/ubuntu/log.txt
-  echo "# ===== WORDPRESS DATABASE USER: $WP_DB_USER" >> /home/ubuntu/log.txt
-  echo "# ===== WORDPRESS DATABASE PASSWORD: $WP_DB_PASS" >> /home/ubuntu/log.txt
-  echo '# =====' >> /home/ubuntu/log.txt
-  echo "# ===== WORDPRESS ADMIN USER: $WP_ADMIN_USER" >> /home/ubuntu/log.txt
-  echo "# ===== WORDPRESS ADMIN PASSWORD: $WP_ADMIN_PASS" >> /home/ubuntu/log.txt
-  echo "# ===== WORDPRESS TABLE PREFIX: $WP_PREFIX" >> /home/ubuntu/log.txt
-  echo '# =====' >> /home/ubuntu/log.txt
-  echo "# ===== MY EXTERNAL IP: $MY_IP" >> /home/ubuntu/log.txt
-  echo '# =====' >> /home/ubuntu/log.txt
+  echo '# ===== WORDPRESS USER, DATABASE AND PASSWORDS =====' >> $HOME/log.txt
+  echo '# =====' >> $HOME/log.txt
+  echo "# ===== WORDPRESS DATABASE NAME: $WP_DB_NAME" >> $HOME/log.txt
+  echo "# ===== WORDPRESS DATABASE USER: $WP_DB_USER" >> $HOME/log.txt
+  echo "# ===== WORDPRESS DATABASE PASSWORD: $WP_DB_PASS" >> $HOME/log.txt
+  echo '# =====' >> $HOME/log.txt
+  echo "# ===== WORDPRESS ADMIN USER: $WP_ADMIN_USER" >> $HOME/log.txt
+  echo "# ===== WORDPRESS ADMIN PASSWORD: $WP_ADMIN_PASS" >> $HOME/log.txt
+  echo "# ===== WORDPRESS TABLE PREFIX: $WP_PREFIX" >> $HOME/log.txt
+  echo '# =====' >> $HOME/log.txt
+  echo "# ===== MY EXTERNAL IP: $MY_IP" >> $HOME/log.txt
+  echo '# =====' >> $HOME/log.txt
 
-  echo -e '\n' >> /home/ubuntu/log.txt
+  echo -e '\n' >> $HOME/log.txt
 
-  echo "$(date "+%F - %T") - Creating database and user for WordPress." | tee -a /home/ubuntu/log.txt
+  echo "$(date "+%F - %T") - Creating database and user for WordPress." | tee -a $HOME/log.txt
   sudo mysql -uroot -p$DB_ROOT_PASS -e "CREATE DATABASE IF NOT EXISTS $WP_DB_NAME; \
     GRANT ALL ON $WP_DB_NAME.* TO '$WP_DB_USER'@'localhost' IDENTIFIED BY '$WP_DB_PASS'; \
     FLUSH PRIVILEGES"
 }
 
 downloadinstallconfigwp() {
-  echo "$(date "+%F - %T") - Downloading the command-line interface for WordPress (WP-CLI)." | tee -a /home/ubuntu/log.txt
+  echo "$(date "+%F - %T") - Downloading the command-line interface for WordPress (WP-CLI)." | tee -a $HOME/log.txt
   curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   chmod +x wp-cli.phar
   sudo mv wp-cli.phar /usr/local/bin/wp
 
-  echo "$(date "+%F - %T") - Downloading the latest version of WordPress." | tee -a /home/ubuntu/log.txt
+  echo "$(date "+%F - %T") - Downloading the latest version of WordPress." | tee -a $HOME/log.txt
   wp core download
   wp core config --dbhost=localhost --dbprefix=$WP_PREFIX --dbname=$WP_DB_NAME --dbuser=$WP_DB_USER --dbpass=$WP_DB_PASS
   wp core install --url=$MY_IP --title="My New Site" --admin_name=wpadmin --admin_password=$WP_ADMIN_PASS --admin_email=you@example.com
   wp config set --add FS_METHOD direct
 
   sudo rm /var/www/html/index.html
-  echo "$(date "+%F - %T") - Setting permissions on files and directories." | tee -a /home/ubuntu/log.txt
+  echo "$(date "+%F - %T") - Setting permissions on files and directories." | tee -a $HOME/log.txt
   echo "This may take a while..."
   sudo find /var/www -type d -exec sudo chmod 2775 {} \;
   sudo find /var/www -type f -exec sudo chmod 0664 {} \;
@@ -81,10 +81,10 @@ downloadinstallconfigwp() {
 # Enabling settings for WordPress
 configweb() {
   sudo cp /etc/apache2/mods-enabled/dir.conf /etc/apache2/mods-enabled/dir.conf.bk
-  echo "$(date "+%F - %T") - Adding an entry to the config index." | tee -a /home/ubuntu/log.txt
+  echo "$(date "+%F - %T") - Adding an entry to the config index." | tee -a $HOME/log.txt
   sudo sed -i 's/DirectoryIndex/DirectoryIndex index.php/' /etc/apache2/mods-enabled/dir.conf
 
-  echo "$(date "+%F - %T") - Enabling configuration in apache2.conf." | tee -a /home/ubuntu/log.txt
+  echo "$(date "+%F - %T") - Enabling configuration in apache2.conf." | tee -a $HOME/log.txt
   sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bk
   URLFILE="/etc/apache2/apache2.conf"
 	NEWTEXT="         AllowOverride All"
@@ -92,7 +92,7 @@ configweb() {
     $URLFILE | grep AllowOverride) | grep -Eo '[0-9]{1,3}' )"
   sudo sed -i "${LINENUMBER}s/.*/$NEWTEXT/" $URLFILE
 
-  echo "$(date "+%F - %T") - Update web values for best performance." | tee -a /home/ubuntu/log.txt
+  echo "$(date "+%F - %T") - Update web values for best performance." | tee -a $HOME/log.txt
   sudo cp /etc/php/8.1/apache2/php.ini /etc/php/8.1/apache2/php.ini.bk
   sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 64M/' /etc/php/8.1/apache2/php.ini
   sudo sed -i 's/post_max_size = 8M/post_max_size = 128M/' /etc/php/8.1/apache2/php.ini
@@ -100,10 +100,10 @@ configweb() {
   sudo sed -i 's/memory_limit = 128M/memory_limit = 256M/' /etc/php/8.1/apache2/php.ini
   sudo sed -i 's/max_input_time = 60/max_input_time = 300/' /etc/php/8.1/apache2/php.ini
 
-  echo '=== Copies of the original configuration files were created:' | tee -a /home/ubuntu/log.txt
-  echo '=== - /etc/apache2/mods-enabled/dir.conf.bk' | tee -a /home/ubuntu/log.txt
-  echo '=== - /etc/apache2/apache2.conf.bk' | tee -a /home/ubuntu/log.txt
-  echo '=== - /etc/php/8.1/apache2/php.ini.bk' | tee -a /home/ubuntu/log.txt
+  echo '=== Copies of the original configuration files were created:' | tee -a $HOME/log.txt
+  echo '=== - /etc/apache2/mods-enabled/dir.conf.bk' | tee -a $HOME/log.txt
+  echo '=== - /etc/apache2/apache2.conf.bk' | tee -a $HOME/log.txt
+  echo '=== - /etc/php/8.1/apache2/php.ini.bk' | tee -a $HOME/log.txt
   
   sudo chown -R www-data:www-data /var/www/
   sudo systemctl restart apache2
@@ -124,7 +124,7 @@ else
     downloadinstallconfigwp
     configweb
     echo -e '\n' >> /home/ubuntu/log.txt
-    echo 'Remember to change the WordPress admin email in Settings / General.' >> /home/ubuntu/log.txt
+    echo 'Remember to change the WordPress admin email in Settings / General.' >> $HOME/log.txt
     echo -e "\n${Yellow} * WORDPRESS IS READY!!!${Color_Off}"
     echo -e "\n${Green} * Installation details in /home/ubuntu/log.txt.${Color_Off}"
     echo -e "\n${Yellow} * DO NOT DELETE THIS FILE BEFORE COPYING THE DATA.${Color_Off}"
