@@ -82,6 +82,10 @@ configfirewall() {
   sudo ufw allow http
   sudo ufw allow https
   sudo echo y | ufw enable
+  # Para Oracle Cloud, comentar los valores anteriores y descomentar los siguiemtes:
+  # sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT
+  # sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
+  # sudo netfilter-persistent save
 }
 
 # Clean installation cache and files that are no longer needed.
