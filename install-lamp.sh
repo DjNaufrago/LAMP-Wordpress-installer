@@ -94,6 +94,7 @@ finishcleanrestart() {
   sudo adduser $USER www-data
   sudo chmod g+w /var/www -R
   sudo chown -R www-data:www-data /var/www/
+  echo -e "ServerName localhost" | sudo tee -a /etc/apache2/apache2.conf
   echo "$(date "+%F - %T") - Clearing package cache an restart web service." | tee -a $HOME/log.txt
   sudo apt-get clean
   sudo apt-get autoclean
