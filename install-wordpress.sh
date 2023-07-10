@@ -72,9 +72,6 @@ downloadinstallconfigwp() {
 
   echo "$(date "+%F - %T") - Applying custom settings to WordPress." | tee -a $HOME/log.txt
   wp config set --add FS_METHOD direct
-  # wp config set --add WP_DEBUG true
-  # wp config set --add WP_DEBUG_LOG true
-  # wp config set --add WP_DEBUG_DISPLAY false
 
   sudo rm /var/www/html/index.html
   echo "$(date "+%F - %T") - Setting permissions on files and directories." | tee -a $HOME/log.txt
