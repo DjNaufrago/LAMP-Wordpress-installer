@@ -69,7 +69,12 @@ downloadinstallconfigwp() {
   wp core download
   wp core config --dbhost=localhost --dbprefix=$WP_PREFIX --dbname=$WP_DB_NAME --dbuser=$WP_DB_USER --dbpass=$WP_DB_PASS
   wp core install --url=$MY_IP --title="My New Site" --admin_name=wpadmin --admin_password=$WP_ADMIN_PASS --admin_email=you@example.com
+
+  echo "$(date "+%F - %T") - Applying custom settings to WordPress." | tee -a $HOME/log.txt
   wp config set --add FS_METHOD direct
+  wp config set --add WP_DEBUG true
+  wp config set --add WP_DEBUG_DISPLAY false
+  wp config set --add WP_DEBUG_LOG true
 
   sudo rm /var/www/html/index.html
   echo "$(date "+%F - %T") - Setting permissions on files and directories." | tee -a $HOME/log.txt
