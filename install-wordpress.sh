@@ -84,6 +84,7 @@ downloadinstallconfigwp() {
   echo 'RewriteCond %{REQUEST_FILENAME} !-f' >> /var/www/html/.htaccess
   echo 'RewriteCond %{REQUEST_FILENAME} !-d' >> /var/www/html/.htaccess
   echo -e "\n"'# END WordPress' >> /var/www/html/.htaccess
+  
   echo -e "\n"'# Disable Directory Indexing and Browsing' >> /var/www/html/.htaccess
   echo 'Options -Indexes' >> /var/www/html/.htaccess
 
