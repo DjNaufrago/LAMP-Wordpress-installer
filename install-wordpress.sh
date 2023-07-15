@@ -73,6 +73,45 @@ downloadinstallconfigwp() {
   echo "$(date "+%F - %T") - Applying custom settings to WordPress." | tee -a $HOME/log.txt
   wp config set --add FS_METHOD direct
 
+  echo "$(date "+%F - %T") - Creating and setting security values for directories." | tee -a $HOME/log.txt
+  touch /var/www/html/.htaccess
+  echo "# BEGIN WordPress" >> /var/www/html/.htaccess
+  echo -e "\n"'RewriteEngine On' >> /var/www/html/.htaccess
+  echo 'RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]' >> /var/www/html/.htaccess
+  echo 'RewriteBase /' >> /var/www/html/.htaccess
+  echo 'RewriteRule . /index.php [L]' >> /var/www/html/.htaccess
+  echo 'RewriteRule ^index\.php$ - [L]' >> /var/www/html/.htaccess
+  echo 'RewriteCond %{REQUEST_FILENAME} !-f' >> /var/www/html/.htaccess
+  echo 'RewriteCond %{REQUEST_FILENAME} !-d' >> /var/www/html/.htaccess
+  echo -e "\n"'# END WordPress' >> /var/www/html/.htaccess
+  echo -e "\n"'# Disable Directory Indexing and Browsing' >> /var/www/html/.htaccess
+  echo 'Options -Indexes' >> /var/www/html/.htaccess
+
+  echo -e "\n"'# Protect WordPress Configuration wp-config.php File' >> /var/www/html/.htaccess
+  echo '<files wp-config.php>' >> /var/www/html/.htaccess
+  echo '    order allow,deny' >> /var/www/html/.htaccess
+  echo '    deny from all' >> /var/www/html/.htaccess
+  echo '</files>' >> /var/www/html/.htaccess
+  
+  echo -e "\n"'# Protect .htaccess From Unauthorized Access' >> /var/www/html/.htaccess
+  echo '<files ~ "^.*\.([Hh][Tt][Aa])">' >> /var/www/html/.htaccess
+  echo '    order allow,deny' >> /var/www/html/.htaccess
+  echo '    deny from all' >> /var/www/html/.htaccess
+  echo '    satisfy all' >> /var/www/html/.htaccess
+  echo '</files>' >> /var/www/html/.htaccess
+
+  touch /var/www/html/wp-includes/.htaccess
+  echo '# Disable PHP Execution for this directory' >> /var/www/html/wp-includes/.htaccess
+  echo '<Files *.php>' >> /var/www/html/wp-includes/.htaccess
+  echo '    deny from all' >> /var/www/html/wp-includes/.htaccess
+  echo '</Files>' >> /var/www/html/wp-includes/.htaccess
+
+  touch /var/www/html/wp-includes/.htaccess
+  echo '# Disable PHP Execution for this directory' >> /var/www/html/wp-includes/.htaccess
+  echo '<Files *.php>' >> /var/www/html/wp-includes/.htaccess
+  echo '    deny from all' >> /var/www/html/wp-includes/.htaccess
+  echo '</Files>' >> /var/www/html/wp-includes/.htaccess
+
   sudo rm /var/www/html/index.html
   echo "$(date "+%F - %T") - Setting permissions on files and directories." | tee -a $HOME/log.txt
   echo "This may take a while..."
