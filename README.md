@@ -70,6 +70,7 @@ During installation, the operating system will prompt you that some kernel servi
   - Download the latest core version of WordPress.
   - Register users in web group.
   - Configure and install WordPress.
+  - Create and set security values for directories. Prevents PHP code execution.
   - Set the proper permissions for web files and directories.
 ### configweb
   - Adds features to the web server to make Wordpress the default page.
