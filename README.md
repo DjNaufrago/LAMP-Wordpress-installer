@@ -90,3 +90,4 @@ During installation, the operating system will prompt you that some kernel servi
 - https://bertvv.github.io/notes-to-self/2015/11/16/automating-mysql_secure_installation/
 - https://unix.stackexchange.com/questions/26284/how-can-i-use-sed-to-replace-a-multi-line-string
 - https://www.plothost.com/kb/create-wordpress-admin-linux-mysql/
+- https://unix.stackexchange.com/questions/507865/add-lines-in-every-public-html-htaccess-file
