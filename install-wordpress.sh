@@ -75,15 +75,28 @@ downloadinstallconfigwp() {
 
   echo "$(date "+%F - %T") - Creating and setting security values for directories." | tee -a $HOME/log.txt
   touch /var/www/html/.htaccess
-  #echo "# BEGIN WordPress" >> /var/www/html/.htaccess
-  #echo -e "\n"'RewriteEngine On' >> /var/www/html/.htaccess
-  #echo 'RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]' >> /var/www/html/.htaccess
-  #echo 'RewriteBase /' >> /var/www/html/.htaccess
-  #echo 'RewriteRule . /index.php [L]' >> /var/www/html/.htaccess
-  #echo 'RewriteRule ^index\.php$ - [L]' >> /var/www/html/.htaccess
-  #echo 'RewriteCond %{REQUEST_FILENAME} !-f' >> /var/www/html/.htaccess
-  #echo 'RewriteCond %{REQUEST_FILENAME} !-d' >> /var/www/html/.htaccess
-  #echo -e "\n"'# END WordPress' >> /var/www/html/.htaccess
+  cat >> /var/www/html/.htaccess << 'EOF'
+# BEGIN WordPress
+
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+# END WordPress
+
+# Disable Directory Indexing and Browsing
+Options -Indexes
+
+# Protect WordPress Configuration wp-config.php File
+<files wp-config.php>
+    order allow,deny
+    deny from all
+ </files>
+EOF
   
   echo -e "\n"'# Disable Directory Indexing and Browsing' >> /var/www/html/.htaccess
   echo 'Options -Indexes' >> /var/www/html/.htaccess
