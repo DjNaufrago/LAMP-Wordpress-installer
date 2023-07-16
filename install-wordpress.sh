@@ -97,34 +97,22 @@ Options -Indexes
     deny from all
  </files>
 EOF
-  
-  echo -e "\n"'# Disable Directory Indexing and Browsing' >> /var/www/html/.htaccess
-  echo 'Options -Indexes' >> /var/www/html/.htaccess
-
-  echo -e "\n"'# Protect WordPress Configuration wp-config.php File' >> /var/www/html/.htaccess
-  echo '<files wp-config.php>' >> /var/www/html/.htaccess
-  echo '    order allow,deny' >> /var/www/html/.htaccess
-  echo '    deny from all' >> /var/www/html/.htaccess
-  echo '</files>' >> /var/www/html/.htaccess
-  
-  echo -e "\n"'# Protect .htaccess From Unauthorized Access' >> /var/www/html/.htaccess
-  echo '<files ~ "^.*\.([Hh][Tt][Aa])">' >> /var/www/html/.htaccess
-  echo '    order allow,deny' >> /var/www/html/.htaccess
-  echo '    deny from all' >> /var/www/html/.htaccess
-  echo '    satisfy all' >> /var/www/html/.htaccess
-  echo '</files>' >> /var/www/html/.htaccess
 
   touch /var/www/html/wp-includes/.htaccess
   echo '# Disable PHP Execution for this directory' >> /var/www/html/wp-includes/.htaccess
-  echo '<Files *.php>' >> /var/www/html/wp-includes/.htaccess
-  echo '    deny from all' >> /var/www/html/wp-includes/.htaccess
-  echo '</Files>' >> /var/www/html/wp-includes/.htaccess
+  cat >> /var/www/html/wp-includes/.htaccess << 'EOF'
+<Files *.php>
+    deny from all
+</Files>
+EOF
 
-  touch /var/www/html/wp-includes/.htaccess
-  echo '# Disable PHP Execution for this directory' >> /var/www/html/wp-includes/.htaccess
-  echo '<Files *.php>' >> /var/www/html/wp-includes/.htaccess
-  echo '    deny from all' >> /var/www/html/wp-includes/.htaccess
-  echo '</Files>' >> /var/www/html/wp-includes/.htaccess
+  touch /var/www/html/wp-content/uploads/.htaccess
+  echo '# Disable PHP Execution for this directory' >> /var/www/html/wp-content/uploads/.htaccess
+  cat >> /var/www/html/wp-content/uploads/.htaccess << 'EOF'
+<Files *.php>
+    deny from all
+</Files>
+EOF
 
   sudo rm /var/www/html/index.html
   echo "$(date "+%F - %T") - Setting permissions on files and directories." | tee -a $HOME/log.txt
