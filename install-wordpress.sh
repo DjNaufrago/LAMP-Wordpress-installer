@@ -73,22 +73,14 @@ downloadinstallconfigwp() {
   echo "$(date "+%F - %T") - Applying custom settings to WordPress." | tee -a $HOME/log.txt
   wp config set --add FS_METHOD direct
 
-  touch /var/www/html/wp-includes/.htaccess
-  echo '# Disable PHP Execution for this directory' >> /var/www/html/wp-includes/.htaccess
-  cat >> /var/www/html/wp-includes/.htaccess << 'EOF'
-<Files *.php>
-    deny from all
-</Files>
-EOF
-
-  touch /var/www/html/wp-content/uploads/.htaccess
-  echo '# Disable PHP Execution for this directory' >> /var/www/html/wp-content/uploads/.htaccess
-  cat >> /var/www/html/wp-content/uploads/.htaccess << 'EOF'
-<Files *.php>
-    deny from all
-</Files>
-EOF
-
+  echo "$(date "+%F - %T") - Applying security settings to WordPress directories." | tee -a $HOME/log.txt
+  wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/htaccess_main
+  wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/htaccess_phpexec
+  mv htaccess_main .htaccess
+  cp htaccess_phpexec /var/www/html/wp-includes/.htaccess
+  cp htaccess_phpexec /var/www/html/wp-content/uploads/.htaccess
+  rm htaccess_phpexec
+  
   sudo rm /var/www/html/index.html
   echo "$(date "+%F - %T") - Setting permissions on files and directories." | tee -a $HOME/log.txt
   echo "This may take a while..."
