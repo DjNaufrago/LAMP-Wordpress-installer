@@ -1,3 +1,4 @@
+# Disable PHP Execution for this directory
 <Files *.php>
   deny from all
 </Files>
