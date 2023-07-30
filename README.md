@@ -15,7 +15,7 @@ Please read the installation steps carefully.
 1. Inside the user directory, download the following file:
 2. `wget https://raw.githubusercontent.com/DjNaufrago/LAMP-Wordpress-installer/main/install-lamp.sh`
 3. Run the script as follows (no sudo):
-4. bash ./install-lamp.sh
+4. `bash ./install-lamp.sh`
 5. Done, you now have a LAMP server up and running.
 
 Can access through your domain name or public ip address.
