@@ -73,31 +73,6 @@ downloadinstallconfigwp() {
   echo "$(date "+%F - %T") - Applying custom settings to WordPress." | tee -a $HOME/log.txt
   wp config set --add FS_METHOD direct
 
-  echo "$(date "+%F - %T") - Creating and setting security values for directories." | tee -a $HOME/log.txt
-  touch /var/www/html/.htaccess
-  cat >> /var/www/html/.htaccess << 'EOF'
-# BEGIN WordPress
-
-RewriteEngine On
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-
-# END WordPress
-
-# Disable Directory Indexing and Browsing
-Options -Indexes
-
-# Protect WordPress Configuration wp-config.php File
-<files wp-config.php>
-    order allow,deny
-    deny from all
- </files>
-EOF
-
   touch /var/www/html/wp-includes/.htaccess
   echo '# Disable PHP Execution for this directory' >> /var/www/html/wp-includes/.htaccess
   cat >> /var/www/html/wp-includes/.htaccess << 'EOF'
