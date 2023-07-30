@@ -27,7 +27,7 @@ updateupgrade() {
   echo "$(date "+%F - %T") - Installing latest packages..." | tee -a $HOME/log.txt
   sudo apt-get -y -qq upgrade
   echo "$(date "+%F - %T") - Installing pwgen password generator." | tee -a $HOME/log.txt
-  sudo apt-get install -qq pwgen
+  sudo apt-get install -qq pwgen curl
 }
     
 # Install apache web server.
